@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Magic Mushrooms Guide</title>
+  <meta name="description" content="A clear, organized, single‑page guide for preparing, journeying, and integrating with magic mushrooms." />
+  <style>
+    /* ===== Design Tokens ===== */
+    :root{
+      --olive: #657a3b;            /* olive green */
+      --abyss: #0b0b0c;            /* abyssal black */
+      --sand: #f1eadf;             /* sand / off‑white */
+      --navy: #0f223b;             /* deep navy */
+      --melanin: #4b3427;          /* melanin brown */
+      --neon: #ff6a00;             /* neon orange */
+      --stone: #8b9096;            /* stone gray */
+      --text: #1d1f21;             /* main text */
+      --muted: #5a5f66;
+      --surface: #ffffff;          /* cards */
+      --ring: rgba(101,122,59,.4); /* focus ring */
+      --shadow: 0 10px 30px rgba(0,0,0,.12), 0 2px 6px rgba(0,0,0,.08);
+      --radius-xl: 16px;
+      --radius-2xl: 22px;
+      --maxw: 1100px;
+    }
+
+    @media (prefers-color-scheme: dark){
+      :root{
+        --text: #e9ebee;
+        --surface: #121316;
+        --sand: #131313;
+        --muted: #b8bdc3;
+        --ring: rgba(255,106,0,.35);
+        --shadow: 0 10px 30px rgba(0,0,0,.6), 0 2px 8px rgba(0,0,0,.35);
+      }
+    }
+
+    *{ box-sizing: border-box; }
+    html, body{ height:100%; }
+    body{
+      margin:0; font: 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      color: var(--text); background: linear-gradient(180deg, var(--sand), #fff);
+      background-attachment: fixed;
+    }
+
+    /* ===== Header ===== */
+    .hero{
+      position: relative; overflow: hidden; isolation: isolate;
+      background: radial-gradient(1200px 600px at 20% 10%, rgba(101,122,59,.18), transparent 60%),
+                  radial-gradient(900px 500px at 90% 0%, rgba(15,34,59,.18), transparent 60%),
+                  linear-gradient(180deg, var(--surface), rgba(255,255,255,.6));
+      border-bottom: 1px solid rgba(0,0,0,.05);
+    }
+    .container{ width: min(100%, var(--maxw)); margin: 0 auto; padding: 24px; }
+    .hero-inner{ padding: 56px 24px 28px; }
+
+    h1{
+      margin: 0 0 8px; font-weight: 800; letter-spacing: .2px;
+      font-size: clamp(28px, 3.6vw, 44px);
+      background: linear-gradient(90deg, var(--navy), var(--olive));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .subtitle{
+      color: var(--muted); max-width: 65ch; font-size: clamp(15px, 2.2vw, 18px);
+    }
+
+    /* ===== Layout ===== */
+    .layout{ display: grid; gap: 28px; grid-template-columns: 280px 1fr; align-items: start; }
+    @media (max-width: 960px){ .layout{ grid-template-columns: 1fr; } }
+
+    /* ===== TOC ===== */
+    nav.toc{
+      position: sticky; top: 16px; align-self: start;
+      background: var(--surface); border: 1px solid rgba(0,0,0,.06); border-radius: var(--radius-xl);
+      box-shadow: var(--shadow); padding: 18px; 
+    }
+    .toc h2{ margin: 0 0 10px; font-size: 14px; text-transform: uppercase; letter-spacing: .12em; color: var(--muted); }
+    .toc a{ display: block; padding: 8px 10px; border-radius: 10px; text-decoration: none; color: var(--text); outline: none; }
+    .toc a:hover{ background: rgba(101,122,59,.08); }
+    .toc a:focus-visible{ box-shadow: 0 0 0 3px var(--ring); }
+    .toc .minor{ padding-left: 22px; font-size: 14px; color: var(--muted); }
+
+    /* ===== Sections ===== */
+    section{
+      background: var(--surface); border: 1px solid rgba(0,0,0,.06); border-radius: var(--radius-2xl); box-shadow: var(--shadow);
+      padding: 24px; margin-bottom: 18px; scroll-margin-top: 18px;
+    }
+    section h2{ margin-top: 0; font-size: clamp(20px, 2.5vw, 28px); letter-spacing: .2px; }
+    h3{ margin: 22px 0 8px; font-size: 18px; }
+    p{ margin: 0 0 10px; }
+    ul{ margin: 8px 0 16px 20px; }
+
+    .badge{ display: inline-flex; align-items:center; gap: 8px; background: rgba(255,106,0,.1); color: var(--neon); border: 1px dashed rgba(255,106,0,.35); border-radius: 999px; padding: 6px 10px; font-size: 12px; text-transform: uppercase; letter-spacing: .12em; }
+
+    /* ===== Cards / callouts ===== */
+    .callout{ border-left: 4px solid var(--olive); background: linear-gradient(180deg, rgba(101,122,59,.06), transparent); padding: 14px 16px; border-radius: 12px; }
+    .callout.warn{ border-left-color: var(--neon); background: linear-gradient(180deg, rgba(255,106,0,.08), transparent); }
+    .callout.note{ border-left-color: var(--navy); background: linear-gradient(180deg, rgba(15,34,59,.08), transparent); }
+
+    /* ===== Table ===== */
+    .table-wrap{ overflow: auto; border-radius: 12px; border: 1px solid rgba(0,0,0,.06); }
+    table{ width: 100%; border-collapse: collapse; min-width: 600px; background: linear-gradient(180deg, rgba(0,0,0,.02), transparent); }
+    th, td{ padding: 12px 14px; text-align: left; vertical-align: top; }
+    thead th{ position: sticky; top: 0; background: var(--surface); border-bottom: 1px solid rgba(0,0,0,.08); font-size: 14px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+    tbody tr + tr td{ border-top: 1px solid rgba(0,0,0,.06); }
+
+    /* ===== Checklist ===== */
+    .checklist{ display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); margin: 10px 0; }
+    .check{
+      display:flex; gap:10px; align-items:flex-start; background: linear-gradient(180deg, rgba(15,34,59,.03), transparent);
+      padding:12px 14px; border-radius: 12px; border:1px solid rgba(0,0,0,.06);
+    }
+    .check input{ accent-color: var(--olive); transform: translateY(2px); }
+    .check label{ flex:1; }
+
+    /* ===== Footer ===== */
+    footer{ color: var(--muted); text-align: center; padding: 40px 20px; }
+
+    /* ===== Utilities ===== */
+    .muted{ color: var(--muted); }
+    .mono{ font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; font-size: 13.5px; }
+    .pill{ display:inline-block; padding:.2rem .5rem; border-radius:999px; background: rgba(139,144,150,.2); color:var(--navy); font-size:.8rem; }
+
+    /* ===== Print Styles ===== */
+    @media print{
+      body{ background: #fff; }
+      nav.toc{ display:none; }
+      section{ break-inside: avoid; box-shadow: none; border-color: #ddd; }
+      a::after{ content:" (" attr(href) ")"; font-size: .9em; color: #666; }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="container hero-inner">
+      <span class="badge" aria-hidden="true">Living Guide</span>
+      <h1>Magic Mushrooms Guide</h1>
+      <p class="subtitle">Clear, friendly guidance for preparing, journeying, and integrating—so the medicine can support the work only you can do.</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="layout">
+      <!-- TOC -->
+      <nav class="toc" aria-label="Table of contents">
+        <h2>Contents</h2>
+        <a href="#about">1. About This Guide</a>
+        <a href="#understand">2. Understanding Mushrooms</a>
+        <a class="minor" href="#magic">— What makes them “magic”?</a>
+        <a class="minor" href="#literal">— What they are, literally</a>
+        <a href="#before">3. Before the Trip</a>
+        <a class="minor" href="#dose">— Choosing a Dose</a>
+        <a class="minor" href="#intent">— Setting Your Intention</a>
+        <a class="minor" href="#vessel">— Preparing Your Vessel</a>
+        <a class="minor" href="#fasting">— Fasting</a>
+        <a href="#day">4. Day of the Trip</a>
+        <a class="minor" href="#mental">— Mental Preparation</a>
+        <a class="minor" href="#ingestion">— Ingestion Options</a>
+        <a href="#during">5. During the Trip</a>
+        <a class="minor" href="#comeup">— Come‑Up</a>
+        <a class="minor" href="#nausea">— Nausea</a>
+        <a class="minor" href="#onset">— Onset</a>
+        <a class="minor" href="#main">— Main Experience</a>
+        <a class="minor" href="#eating">— Eating During</a>
+        <a class="minor" href="#time">— Best Time of Day</a>
+        <a href="#after">6. After: Integration</a>
+        <a href="#final">7. Final Note</a>
+      </nav>
+
+      <div>
+        <!-- 1. About -->
+        <section id="about" aria-labelledby="about-h">
+          <h2 id="about-h">1. About This Guide</h2>
+          <p><strong>Who I am:</strong> I’ve worked with psychedelics—especially magic mushrooms—as plant medicine dozens of times.</p>
+          <p><strong>Why I wrote this:</strong> To distill what I’ve learned so you can have more favorable experiences.</p>
+          <div class="callout note">
+            <p><strong>Important:</strong> Your journey is personal. Take what resonates, leave what doesn’t. This is a living guide, not a rulebook.</p>
+          </div>
+        </section>
+
+        <!-- 2. Understanding -->
+        <section id="understand" aria-labelledby="understand-h">
+          <h2 id="understand-h">2. Understanding Magic Mushrooms</h2>
+
+          <h3 id="magic">What makes them “magic”?</h3>
+          <p>They’re agents of change and transformation. With intention they can help shift your mindset, bring insight, and support lasting states of inner peace.</p>
+
+          <h3 id="literal">What are they, literally?</h3>
+          <p>Magic mushrooms contain <strong>psilocybin</strong> and <strong>psilocin</strong>, which alter consciousness. They’re being actively studied for mental‑health applications like depression, anxiety, PTSD, and addiction.</p>
+          <ul>
+            <li>Expand brain‑network connectivity (neuroplasticity) and help form new connections.</li>
+            <li>May increase gray matter that supports mental functioning.</li>
+            <li>Personally, they can help release tension, blockages, fears, and limiting beliefs; support grief; and deepen meditation/self‑alchemy.</li>
+          </ul>
+        </section>
+
+        <!-- 3. Before the Trip -->
+        <section id="before" aria-labelledby="before-h">
+          <h2 id="before-h">3. Before the Trip</h2>
+
+          <h3 id="dose">Choosing a Dose</h3>
+          <p><strong>Principle:</strong> Match the dose to the inner work at hand. If you haven’t had mushrooms in 6+ months, consider a “full‑trip” dose of ~3 g+.</p>
+          <div class="table-wrap" role="region" aria-label="Dose ranges">
+            <table>
+              <thead>
+                <tr>
+                  <th>Cadence</th>
+                  <th>Range</th>
+                  <th>Typical Effect</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Daily</td>
+                  <td>0.25–0.5 g</td>
+                  <td>Threshold; light mood shift</td>
+                </tr>
+                <tr>
+                  <td>Every 2–4 days</td>
+                  <td>0.5–1 g</td>
+                  <td>Mild to moderate</td>
+                </tr>
+                <tr>
+                  <td>Every 4 days</td>
+                  <td>1–2 g</td>
+                  <td>Moderate</td>
+                </tr>
+                <tr>
+                  <td>Once a week</td>
+                  <td>1.5–2.5 g</td>
+                  <td>Moderate to strong</td>
+                </tr>
+                <tr>
+                  <td>Biweekly</td>
+                  <td>2 g+</td>
+                  <td>Strong</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 id="intent">Setting Your Intention</h3>
+          <p>Declare your intention <strong>24 hours to 2 weeks</strong> in advance. This gives your subconscious time to prepare and distinguishes medicine work from recreation. If mushrooms are part of your regular practice, your “vessel” may already be prepared.</p>
+
+          <h3 id="vessel">Preparing Your Vessel</h3>
+          <div class="checklist" role="list">
+            <div class="check"><input type="checkbox" id="c1" /><label for="c1">Prioritize wholesome food and adequate rest.</label></div>
+            <div class="check"><input type="checkbox" id="c2" /><label for="c2">Hydrate and include gentle movement/exercise.</label></div>
+            <div class="check"><input type="checkbox" id="c3" /><label for="c3">Deepen practices you already do (e.g., yoga), rather than adding extremes.</label></div>
+            <div class="check"><input type="checkbox" id="c4" /><label for="c4">Minimize caffeine, alcohol, ultra‑processed food, and excess sugar—within your comfort zone.</label></div>
+          </div>
+
+          <h3 id="fasting">Fasting</h3>
+          <div class="callout">
+            <p><strong>Goal:</strong> Fast for <strong>4–8 hours</strong> before ingestion. If hungry, have a light snack (e.g., an apple) about 30 minutes prior.</p>
+            <ul>
+              <li>Helps reduce nausea.</li>
+              <li>Can enhance the medicine’s effects by freeing up energy from digestion.</li>
+            </ul>
+          </div>
+          <h3 id="Microdosing">What is Microdosing?</h3>
+          <div class="callout">
+            <p><strong>Microdosing:</strong> A subperceptual dose &lt;0.1g. It is no greater than a placebo. That is not to say it does not work, but to say it works as well as the power of your mind alone.</p>
+          </div>
+        </section>
+
+        <!-- 4. Day of the Trip -->
+        <section id="day" aria-labelledby="day-h">
+          <h2 id="day-h">4. Day of the Trip</h2>
+
+          <h3 id="mental">Mental Preparation</h3>
+          <p>Spend <strong>30–60 minutes</strong> grounding with practices you’re drawn to: yoga, meditation, prayer, journaling, art, music, walking, or singing. Ingest the mushrooms, then return to grounding practices during the come‑up.</p>
+
+          <h3 id="ingestion">Ingestion Options</h3>
+          <div class="table-wrap" role="region" aria-label="Ingestion methods">
+            <table>
+              <thead>
+                <tr>
+                  <th>Method</th>
+                  <th>How</th>
+                  <th>Pros</th>
+                  <th>Cons</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Chew &amp; swallow</td>
+                  <td>Chew thoroughly and swallow whole.</td>
+                  <td>Simple; intimate; meditative.</td>
+                  <td>Taste; possible nausea.</td>
+                </tr>
+                <tr>
+                  <td>Tea</td>
+                  <td>Grind or chop; steep in ~185°F / 85°C water for 15–20 min; add honey/lemon; discard solids.</td>
+                  <td>More palatable; often faster onset.</td>
+                  <td>Requires time/prep.</td>
+                </tr>
+                <tr>
+                  <td>Powder with food</td>
+                  <td>Mix finely ground mushrooms into applesauce or mashed berries (optional honey/lemon).</td>
+                  <td>Very palatable.</td>
+                  <td>Needs grinder/mortar or similar.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 5. During the Trip -->
+        <section id="during" aria-labelledby="during-h">
+          <h2 id="during-h">5. During the Trip</h2>
+
+          <h3 id="comeup">Come‑Up</h3>
+          <p>Impatience, skepticism, anxious anticipation, or excitement are normal. Gently remind yourself you’re safe and everything is unfolding as it should. The come‑up typically lasts <strong>10–45 minutes</strong>, depending on ingestion method.</p>
+
+          <h3 id="nausea">Nausea</h3>
+          <div class="callout warn">
+            <p>Possible but not guaranteed. Fasting and using tea or powder can reduce nausea.</p>
+          </div>
+
+          <h3 id="onset">Onset</h3>
+          <p>Lightheadedness or bodily heaviness is common. Sit or lie somewhere comfortable with blankets and pillows.</p>
+
+          <h3 id="main">Main Experience</h3>
+          <ul>
+            <li>Watch your breath.</li>
+            <li>Follow intuition—thinking, self‑touch, movement, or stillness.</li>
+            <li>If restless or uncomfortable, adjust: change setting, posture, or activity (walk, dance, stretch).</li>
+            <li>Discomfort is a signal to change something—not a test to merely endure.</li>
+          </ul>
+
+          <h3 id="eating">Eating During</h3>
+          <p>Personal choice. Many wait until after the come‑up. If hungry, choose light, hydrating foods (fruit, soup, salad) and eat until comfortably full.</p>
+
+          <h3 id="time">Best Time of Day</h3>
+          <ul>
+            <li><strong>Morning:</strong> You’re naturally fasted and rested—often ideal.</li>
+            <li><strong>Night:</strong> Still and inward but may carry the day’s residue. Avoid starting while sleepy.</li>
+          </ul>
+        </section>
+
+        <!-- 6. After -->
+        <section id="after" aria-labelledby="after-h">
+          <h2 id="after-h">6. After the Trip: Integration</h2>
+          <p>Integration means carrying your insights into daily life over the next few days.</p>
+          <div class="checklist" role="list">
+            <div class="check"><input type="checkbox" id="a1" /><label for="a1">Observe thoughts, feelings, and behaviors without judgment.</label></div>
+            <div class="check"><input type="checkbox" id="a2" /><label for="a2">Notice spontaneous peace or healthier choices and support them.</label></div>
+            <div class="check"><input type="checkbox" id="a3" /><label for="a3">Pay attention to synchronicities and gentle guidance.</label></div>
+          </div>
+        </section>
+
+        <!-- 7. Final Note -->
+        <section id="final" aria-labelledby="final-h">
+          <h2 id="final-h">7. Final Note</h2>
+          <p>Mushrooms don’t heal you—you heal you. They are a tool that can support your own work. Sometimes you surrender; sometimes you direct. Listen with grace, stay receptive, and let both positive and challenging experiences teach you for future sessions.</p>
+        </section>
+
+        <footer>
+          <p class="mono">v1.0 — Single‑file HTML & CSS · <span class="pill">Living Guide</span></p>
+        </footer>
+      </div>
+    </div>
+  </main>
+</body>
+</html>
